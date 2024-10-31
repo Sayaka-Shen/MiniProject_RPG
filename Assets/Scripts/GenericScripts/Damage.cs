@@ -32,7 +32,7 @@ public class Damage : MonoBehaviour
     {
         _colliders.Remove(other);
         
-        if( _coroutine != null )
+        if(_coroutine != null)
         {
             StopCoroutine(_coroutine);
         }
@@ -52,7 +52,7 @@ public class Damage : MonoBehaviour
                 }
             }
 
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(_checkColliderInterval);
         }
     }
 }

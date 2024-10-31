@@ -57,7 +57,7 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator WaitBeforeStopAttack()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
         _attackingVar = false;
     }
