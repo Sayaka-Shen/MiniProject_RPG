@@ -8,7 +8,8 @@ public class AIEnemyPatrol : MonoBehaviour
     [SerializeField] private NavMeshAgent _agent;
 
     [Header("Layer Params")]
-    [SerializeField] private LayerMask _groundLayer, _playerLayer;
+    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private LayerMask _playerLayer;
 
     [Header("Patrol Params")]
     [SerializeField] private float _walkRange;
@@ -37,16 +38,15 @@ public class AIEnemyPatrol : MonoBehaviour
             Patrol();
         }
 
-        if(_playerInSight && !_playerInAttackRange)
+        if (_playerInSight && !_playerInAttackRange)
         {
             Chase();
         }
 
-        if(_playerInSight && _playerInAttackRange)
+        if (_playerInSight && _playerInAttackRange)
         {
             Attack();
         }
-
     }
 
     private void Chase()
@@ -86,7 +86,7 @@ public class AIEnemyPatrol : MonoBehaviour
         _destPoint = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
 
         // Return true if raycast find anything directly below destPoint = set groundLayer -> navMeshLayer
-        if(Physics.Raycast(_destPoint, Vector3.down, _groundLayer))
+        if(Physics.Raycast(_destPoint, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
             _walkPointSet = true;
         }
@@ -97,17 +97,17 @@ public class AIEnemyPatrol : MonoBehaviour
         if (_activateWalkRangeGizmos)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(transform.position, _walkRange);
+            Gizmos.DrawWireSphere(transform.position, _walkRange);
         }
 
         if(_activateSightRangeGizmos)
         { 
-            Gizmos.DrawSphere(transform.position, _sightRange);       
+            Gizmos.DrawWireSphere(transform.position, _sightRange);       
         }
 
         if(_activateAttackRangeGizmos)
         {
-            Gizmos.DrawSphere(transform.position, _attackRange);
+            Gizmos.DrawWireSphere(transform.position, _attackRange);
         }
     }
 }

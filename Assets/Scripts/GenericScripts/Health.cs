@@ -18,6 +18,7 @@ public class Health : MonoBehaviour
     // int ajoute un param de type int (ça peut être n'importe quoi)
     // jusqu'à 16 types dispo
     public event Action OnTakeDamage;
+    [SerializeField] private UnityEvent OnTakeDamageFeedback;
 
     // Delegate type qui représente un evenement (plus besoin)
 
@@ -75,8 +76,9 @@ public class Health : MonoBehaviour
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, _maxHealth);
 
         OnTakeDamage?.Invoke(); // C# Event
+        OnTakeDamageFeedback?.Invoke();
 
-        if(_currentHealth <= 0)
+        if (_currentHealth <= 0)
         {
             Die();
         }

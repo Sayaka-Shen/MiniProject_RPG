@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
@@ -28,6 +29,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private Animator _playerAnimator;
     private const string ISMOVING = "IsMoving";
     private const string ISJUMPING = "Jumping";
+
+    [Header("Event")]
+    [SerializeField] private UnityEvent OnPlayerMoving; 
 
     // Enumerations
     private enum PlayerState
@@ -72,7 +76,9 @@ public class PlayerMove : MonoBehaviour
             _playerRigidBody.MovePosition(transform.position + _realDir * _playerSpeed * Time.fixedDeltaTime);
             transform.LookAt(transform.position + _realDir);
 
+            // Feedback
             _playerAnimator.SetBool(ISMOVING, true);
+            OnPlayerMoving?.Invoke();
         }
         else
         {
